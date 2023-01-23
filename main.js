@@ -76,6 +76,7 @@ form.addEventListener("submit", function (e) {
 			</div>
 			</div><div class="photos"></div>
 		`;
+		output.style.opacity = 0;
 		getCountryBasics(userInput);
 	}
 });
