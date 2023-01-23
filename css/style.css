@@ -1,0 +1,258 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  margin: 0;
+  padding: 0;
+}
+
+.main-box {
+  font-size: 1.6rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0 auto;
+  padding: 10rem;
+  width: 100%;
+  min-height: 100vh;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: #efffff;
+}
+.main-box form {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0 auto;
+}
+.main-box form input[type=text],
+.main-box form select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 0 0 2rem 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  text-align: center;
+}
+.main-box form input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.main-box .output {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 2rem;
+  gap: 2rem;
+  opacity: 0;
+}
+.main-box .output .country-card {
+  width: 35rem;
+  width: 21%;
+  min-height: 54rem;
+  background-color: white;
+  box-shadow: 0 1px 3px 1px grey;
+  border-radius: 0.3rem;
+}
+.main-box .output .country-card .flag {
+  width: 100%;
+  height: 18rem;
+}
+.main-box .output .country-card .flag img {
+  width: 100%;
+  max-height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+}
+.main-box .output .country-card .description-box {
+  padding: 3rem 3rem 4rem 3rem;
+}
+.main-box .output .country-card .description-box div span {
+  font-weight: 700;
+  color: #333;
+}
+.main-box .output .country-card .description-box div:not(:nth-child(-n+2)) {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
+  margin-top: 2rem;
+}
+.main-box .output .country-card .description-box .name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+}
+.main-box .output .country-card .description-box .name-official {
+  font-style: italic;
+  min-height: 4.2rem;
+}
+.main-box .output .weather-card {
+  width: 35rem;
+  width: 21%;
+  min-height: 54rem;
+  background-color: white;
+  box-shadow: 0 1px 3px 1px grey;
+  border-radius: 0.3rem;
+  order: 2;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.main-box .output .weather-card .icon {
+  width: 5rem;
+  height: 18rem;
+  font-size: 10rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-box .output .weather-card .icon img {
+  width: 100%;
+  max-height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.main-box .output .weather-card .description-box {
+  height: 36rem;
+  padding: 3rem 3rem 6rem 3rem;
+}
+.main-box .output .weather-card .description-box .weather {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  padding-bottom: 4.2rem;
+}
+.main-box .output .weather-card .description-box div span {
+  font-weight: 700;
+  color: #333;
+}
+.main-box .output .weather-card .description-box div:not(:first-child) {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
+  margin-top: 2rem;
+}
+.main-box .output .map-wrapper {
+  min-height: 54rem;
+  width: 55%;
+  border-radius: 0.3rem;
+  box-shadow: 0 1px 3px 1px grey;
+  order: 3;
+  position: relative;
+}
+.main-box .output .map-wrapper .toggle-map {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  border-radius: 20px;
+  background-color: white;
+  height: 3rem;
+  cursor: pointer;
+}
+.main-box .output .map-wrapper .toggle-map i {
+  margin-top: -5px;
+  font-size: 4rem;
+}
+.main-box .output .map-wrapper .map {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.main-box .output .map-wrapper .map .leaflet-popup-content-wrapper {
+  background-color: #333;
+}
+.main-box .output .map-wrapper .map .leaflet-popup-content-wrapper .leaflet-popup-content {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #ddd;
+}
+.main-box .output .map-wrapper .map .leaflet-popup-tip-container .leaflet-popup-tip {
+  background: #333;
+}
+.main-box .output .photos {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  row-gap: 2rem;
+  order: 4;
+}
+.main-box .output .photos__single {
+  height: 300px;
+  cursor: pointer;
+  position: relative;
+  flex-grow: 1;
+}
+.main-box .output .photos__single img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  border-radius: 5px;
+}
+
+@media (max-width: 1600px) {
+  .main-box {
+    padding: 10rem 5rem;
+  }
+  .output .map-wrapper {
+    width: 54% !important;
+  }
+}
+@media (max-width: 1200px) {
+  .main-box {
+    padding: 10rem 15rem;
+  }
+  .output .map-wrapper {
+    width: 100% !important;
+  }
+  .output .country-card {
+    width: 48% !important;
+  }
+  .output .weather-card {
+    width: 48% !important;
+  }
+}
+@media (max-width: 900px) {
+  .main-box {
+    padding: 10rem 5rem;
+  }
+}
+@media (max-width: 650px) {
+  .main-box {
+    padding: 10rem 10rem;
+  }
+  .output .country-card {
+    width: 100% !important;
+  }
+  .output .weather-card {
+    width: 100% !important;
+  }
+}
+@media (max-width: 525px) {
+  .main-box {
+    padding: 10rem 2rem;
+  }
+}/*# sourceMappingURL=style.css.map */

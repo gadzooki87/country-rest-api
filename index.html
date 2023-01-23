@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <link rel="stylesheet" href="css/style.css" />
+
+		<script defer src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+		<script defer src="main.js"></script>
+
+		<title>Async REST API</title>
+	</head>
+	<body>
+		<div class="main-box">
+			<form class="form">
+				<input type="text" id="country" name="country" placeholder="Type a Country Name" class="input" />
+				<!-- <input type="submit" value="Submit"> -->
+			</form>
+			<div class="output">
+				<!-- <div class="country-card">
+          <div class="flag">
+            <img src="" alt="">
+          </div>
+          <div class="description-box">
+            <div class="name">Poland</div>
+            <div class="name-official">Republic of Poland</div>
+            <div class="capital">💒 Capital: <span>Warsaw</span></div>
+            <div class="population">🧑 Population: <span>37.4 mln</span></div>
+            <div class="currency">💰 Currency: <span>Zloty</span></div>
+          </div>
+        </div> -->
+
+        <!-- <div class="weather-card">
+          <div class="icon">
+            <i class="fa-solid fa-clouds"></i>
+          </div>
+          <div class="description-box">
+            <div class="temp">Temperature(avg): <span>${}</span></div>
+            <div class="clouds">Cloud cover: <span>${}</span></div>
+            <div class="precipitation">Chance of rain: <span>${}</span></div>
+            <div class="wind">Wind Speed: <span>${}</span></div>
+            <div class="humidity">Humidity: <span>${}</span></div>
+          </div>
+        </div> -->
+
+        <div class="map-wrapper">
+          <div class="map map-default" id="map"></div>
+          <div class="toggle-map"><i class="fa-solid fa-toggle-off"></i></div>
+        </div>
+				
+
+
+
+        <div class="photos">
+          <!-- <div class="photos__single">
+            <img src="https://images.unsplash.com/photo-1527866959252-deab85ef7d1b?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwyMzg4ODJ8MHwxfHNlYXJjaHw0fHxnZXJtYW55fGVufDB8fHx8MTY3Mzk3OTUyMw&ixlib=rb-4.0.3&q=80" alt="">
+          </div> -->
+        </div>
+			</div>
+		</div>
+	</body>
+</html>
