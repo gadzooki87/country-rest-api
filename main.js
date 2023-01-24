@@ -45,7 +45,7 @@ const getJSON = (url, errorMsg = "Something went wrong. Probably network connect
 function getCountryBasics(name) {
 	// Promise.all() -----> check for solutions
 
-	getJSON(`https://restcountries.com/v3.1/name/${name}`, "Country not found.")
+	getJSON(`https://restcountries.com/v3.1/name/${name}?fullText=true`, "Country not found.")
 		.then(([data]) => {
 			renderCard(data);
 			console.log(data);
