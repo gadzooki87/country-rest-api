@@ -1,61 +1,3 @@
-//////////////////////////////////////////////////////////////////
-////////////////////  Some APIs used ////////////////////////////
-
-/* 
-
-1. Info of countries
-// URL: https://restcountries.com/
-// Endpoint: https://restcountries.com/v3.1/name/${name}`
-
-2. Weather
-// URL: https://api.open-meteo.com
-// Endpoint: `https://api.open-meteo.com/v1/forecast?latitude=${latlng[0]}&longitude=${latlng[1]}&hourly=temperature_2m,relativehumidity_2m,precipitation,surface_pressure,cloudcover&current_weather=true&start_date=${currentDate}&end_date=${tomorrowDate}&timezone=auto`
-
-3. Leaflet Maps
-
-4. Unsplash for photos
-
-**/
-
-/////////////////////////////////////////////////////////////////
-/////////////  Ideas for APIs that could be used ////////////////
-
-// Wikipedia API aka Mediawiki
-// The unofficial Wikipedia API. Because Wikipedia is built using MediaWiki, which in turn supports an API, Wikipedia does as well.
-// This provides developers code-level access to the entire Wikipedia reference.
-
-// Get all administrative divisions of a country
-// https://github.com/kamikazechaser/administrative-divisions-db
-
-// ip-fast.com
-// IP address for country and city
-
-// https://date.nager.at/
-// public holidays
-
-// weather-api
-// https://github.com/robertoduessmann/weather-api
-
-// World bank
-// https://datahelpdesk.worldbank.org/knowledgebase/articles/889386-developer-information-overview
-
-/////////////////////////////////////////////////////////////////
-////////////////////  Things that could be done /////////////////
-
-/* 
-	Date: 1/19/2023
-
-	Beside:
-
-	1. Basic description of a country via Wiki
-	2. Maybe change the theme to dark, if it's night time in the country.
-	3. Show overlay for pictures when clicked. Maybe can iterate pictures in prev next fashion while in overlay.
-	4. Bring more pictures button. 
-	5. Move the map only when it's focused. On map click allow its full features.
-	6. Bring up some most extreme facts about countries of the world. Like: smallest countries, most rich, poorest, most populated, least populated, etc
-
-**/
-
 ///////////////////////////////////////////////////////////////
 /////////////////////    Start     ///////////////////////////
 
@@ -75,6 +17,14 @@ form.addEventListener("submit", function (e) {
 				<div class="toggle-map"><i class="fa-solid fa-toggle-off toggle-map-icon"></i></div>
 			</div>
 			</div><div class="photos"></div>
+
+			<!-- The Modal/Lightbox -->
+			<div id="myModal" class="modal">
+				<span class="close cursor">&times;</span>
+				<div class="modal-content">
+
+				</div>
+			</div>
 		`;
 		output.style.opacity = 0;
 		getCountryBasics(userInput);
@@ -150,9 +100,15 @@ function loadMap(coords) {
 }
 
 function unsplash(query) {
-	getJSON(`https://api.unsplash.com/search/photos?page=1&per_page=20&query=${query}&client_id=ZnA8Fx4U0KqXYNHvj2wd5CTv_f_E86PCOVh4UWIuIXA`, "Can't fetch the pictures.").then((data) => {
-		renderPhotos(data.results);
-	});
+	getJSON(`https://api.unsplash.com/search/photos?page=1&per_page=20&query=${query}&client_id=ZnA8Fx4U0KqXYNHvj2wd5CTv_f_E86PCOVh4UWIuIXA`, "Can't fetch the pictures.")
+		.then((data) => {
+			renderPhotos(data.results);
+			return data.results;
+		})
+		.then((data) => {
+			console.log("Unsplash: ", data);
+			populateModal(data);
+		});
 }
 
 /////////////////////////////////////////////////////////////
@@ -213,9 +169,9 @@ function renderWeatherCard(data) {
 function renderPhotos(results) {
 	let output = "";
 
-	results.forEach((element) => {
+	results.forEach((element, index) => {
 		output += `
-			<div class="photos__single">
+			<div class="photos__single" data-number="${index}">
 				<img src="${element.urls.regular}" alt="">
 			</div>
 		`;
@@ -295,8 +251,8 @@ function chooseWeatherIcon(weathercode) {
 	return icon;
 }
 
-/////////////////////////////////////////////////////////////
-////////////////////// Toggle map back and forth /////////////////////
+///////////////////////////////////////////////////////////
+////////////// Toggle map back and forth //////////////////
 function toggleMapControl() {
 	map.style.pointerEvents = "all";
 	map.style.userSelect = "all";
@@ -305,56 +261,178 @@ function toggleMapControl() {
 		mapToggle.classList.remove("fa-toggle-off");
 		mapToggle.classList.add("fa-toggle-on");
 		map.style.pointerEvents = "all";
-		// map.style.userSelect = "all";
 	} else {
 		mapToggle.classList.remove("fa-toggle-on");
 		mapToggle.classList.add("fa-toggle-off");
 		map.style.pointerEvents = "none";
-		// map.style.userSelect = "none";
 	}
-	console.log("toggle clicked");
 }
 
+///////////////////////////////////////////////////////////
+/////////////////////// Modal /////////////////////////////
 
+function populateModal(data) {
+	const modalContent = document.querySelector(".modal-content");
 
-///////////////////////////////////////////////////////////////////
-////////////// Possible architecture of promises ??????????????????
+	let output = ``;
 
-// Check how this work -> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally
+	data.forEach((el, index) => {
+		const desc = el.description != null ? el.description : el.alt_description != null ? el.alt_description : "No description"
+		output += `
+			<div class="photo-single--modal" data-number="${index}" data-desc="${desc}">
+				<div class="numbertext">${index + 1} / ${data.length}</div>
+				<img src="${el.urls.regular}">
+			</div>
+		`;
+	});
 
-// function checkMail() {
-// 	return new Promise((resolve, reject) => {
-// 		if (Math.random() > 0.5) {
-// 			resolve("Mail has arrived");
-// 		} else {
-// 			reject(new Error("Failed to arrive"));
-// 		}
-// 	});
-// }
+	output += `
+		<!-- Next/previous controls -->
+    <a class="prev">&#10094;</a>
+    <a class="next">&#10095;</a>
 
-// checkMail()
-// 	.then((mail) => {
-// 		console.log(mail);
-// 	})
-// 	.catch((err) => {
-// 		console.error(err);
-// 	})
-// 	.finally(() => {
-// 		console.log("Experiment completed");
-// 	});
+    <!-- Caption text -->
+    <div class="caption-container">
+      <p id="caption"></p>
+    </div>
+		<div class="thumbnails">
+	`;
 
-////////////////////// or this
+	data.forEach((el, index) => {
+		const desc = el.description != null ? el.description : el.alt_description != null ? el.alt_description : "No description";
+		output += `
+			<div class="thumbnail" data-number="${index}" data-desc="${desc}">
+				<img src="${el.urls.small}" alt="Nature">
+			</div>
+		`;
+	});
 
-// const promise1 = Promise.resolve(3);
-// const promise2 = new Promise((resolve, reject) => setTimeout(reject, 100, 'foo'));
-// const promises = [promise1, promise2];
+	output += `
+		<div/> 
+	`;
 
-// Promise.allSettled(promises).
-//   then((results) => results.forEach((result) => console.log(result.status)));
+	modalContent.insertAdjacentHTML("beforeend", output);
+}
 
-// Expected output:
-// "fulfilled"
-// "rejected"
+function openModal() {
+	document.getElementById("myModal").style.display = "block";
+}
 
-// Read (MUST!!!)
-// https://javascript.info/promise-chaining
+function closeModal() {
+	document.getElementById("myModal").style.display = "none";
+	const photos = document.querySelectorAll(".photo-single--modal");
+	photos.forEach((photo) => {
+		photo.style.display = "none";
+	});
+}
+
+function chooseCurrentPhoto(current) {
+	const photos = document.querySelectorAll(".photo-single--modal");
+	photos.forEach((photo) => {
+		if (photo.dataset.number == current) {
+			photo.style.display = "block";
+			const caption = document.getElementById("caption");
+			caption.innerHTML = photo.dataset.desc;
+		}
+	});
+}
+
+function prevPhoto() {
+	let photos = document.querySelectorAll(".photo-single--modal");
+	let current;
+	let prev;
+	photos.forEach((photo) => {
+		if (photo.style.display == "block") {
+			photo.style.display = "none";
+			current = photo.dataset.number;
+			if (current == 0) {
+				prev = photos.length - 1;
+			} else {
+				prev = Number(current) - 1;
+			}
+		}
+	});
+
+	photos.forEach((photo) => {
+		if (photo.dataset.number == prev) {
+			photo.style.display = "block";
+			const caption = document.getElementById("caption")
+			caption.innerHTML = photo.dataset.desc
+		}
+	});
+}
+
+function nextPhoto() {
+	const photos = document.querySelectorAll(".photo-single--modal");
+	let current;
+	let next;
+	photos.forEach((photo) => {
+		if (photo.style.display == "block") {
+			photo.style.display = "none";
+			current = photo.dataset.number;
+			if (current == photos.length - 1) {
+				next = 0;
+			} else {
+				next = Number(current) + 1;
+			}
+		}
+	});
+
+	photos.forEach((photo) => {
+		if (photo.dataset.number == next) {
+			photo.style.display = "block";
+			const caption = document.getElementById("caption");
+			caption.innerHTML = photo.dataset.desc;
+		}
+	});
+}
+
+function clickThumbnail (thumbnailClicked) {
+	const photos = document.querySelectorAll(".photo-single--modal");
+	photos.forEach((photo) => {
+		if (photo.style.display == "block") {
+			photo.style.display = "none";
+		}
+	});
+
+	photos.forEach((photo) => {
+		if (photo.dataset.number == thumbnailClicked) {
+			photo.style.display = "block";
+			const caption = document.getElementById("caption");
+			caption.innerHTML = photo.dataset.desc;
+		}
+	});
+
+	const myModal = document.getElementById("myModal")
+	myModal.scrollTo(0, 0);
+
+}
+
+document.addEventListener("click", (e) => {
+	e.stopPropagation();
+
+	// Click on photo
+	if (e.target.parentElement.classList.contains("photos__single")) {
+		const current = e.target.parentElement.dataset.number;
+		openModal();
+		chooseCurrentPhoto(current);
+	}
+
+	// Close modal
+	if (e.target.classList.contains("close")) {
+		closeModal();
+	}
+
+	if (e.target.classList.contains("prev")) {
+		prevPhoto();
+	}
+
+	if (e.target.classList.contains("next")) {
+		nextPhoto();
+	}
+
+	if (e.target.parentElement.classList.contains("thumbnail")) {
+		const thumbnailClicked = e.target.parentElement.dataset.number
+		clickThumbnail(thumbnailClicked);
+	}
+});

@@ -57,6 +57,7 @@ html {
   padding-top: 2rem;
   gap: 2rem;
   opacity: 0;
+  /* The Modal (background) */
 }
 .main-box .output .country-card {
   width: 35rem;
@@ -212,6 +213,135 @@ html {
   vertical-align: middle;
   border-radius: 5px;
 }
+.main-box .output .modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #333;
+  scroll-behavior: smooth;
+  /* The Close Button */
+  /* Modal Content */
+}
+.main-box .output .modal::-webkit-scrollbar {
+  display: none;
+}
+.main-box .output .modal .close {
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 35px;
+  font-weight: bold;
+}
+.main-box .output .modal .close:hover,
+.main-box .output .modal .close:focus {
+  color: #999;
+  text-decoration: none;
+  cursor: pointer;
+}
+.main-box .output .modal .modal-content {
+  position: relative;
+  background-color: #000;
+  margin: auto;
+  width: 90%;
+  padding-top: 10rem;
+  max-width: 1200px;
+  /* Hide the slides by default */
+  /* Next & previous buttons */
+  /* Position the "next button" to the right */
+  /* Number text (1/3 etc) */
+  /* Caption text */
+}
+.main-box .output .modal .modal-content .photo-single--modal {
+  display: none;
+  width: 100%;
+  height: 50rem;
+  background-color: #000;
+}
+.main-box .output .modal .modal-content .photo-single--modal img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.main-box .output .modal .modal-content .prev,
+.main-box .output .modal .modal-content .next {
+  cursor: pointer;
+  position: absolute;
+  top: 35rem;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  -webkit-user-select: none;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.main-box .output .modal .modal-content .prev:hover,
+.main-box .output .modal .modal-content .next:hover {
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.main-box .output .modal .modal-content .next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+.main-box .output .modal .modal-content .numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+.main-box .output .modal .modal-content .caption-container {
+  text-align: center;
+  background-color: black;
+  margin: 2rem 0;
+  color: white;
+  height: 10rem;
+  overflow-y: auto;
+}
+.main-box .output .modal .modal-content .caption-container::-webkit-scrollbar-track {
+  background-color: rgb(63, 63, 63);
+}
+.main-box .output .modal .modal-content .caption-container #caption {
+  padding: 0 5rem;
+  overflow-y: hidden;
+}
+.main-box .output .modal .modal-content .thumbnails {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #333;
+}
+.main-box .output .modal .modal-content .thumbnails .thumbnail {
+  width: 25%;
+  height: 200px;
+  cursor: pointer;
+  position: relative;
+}
+.main-box .output .modal .modal-content .thumbnails .thumbnail img {
+  opacity: 0.8;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+}
+.main-box .output .modal .modal-content .thumbnails .thumbnail img:hover {
+  opacity: 1;
+}
 
 @media (max-width: 1600px) {
   .main-box {
@@ -239,10 +369,33 @@ html {
   .main-box {
     padding: 10rem 5rem;
   }
+  .photo-single--modal {
+    height: 40rem !important;
+  }
+  .prev,
+.next {
+    top: 33rem !important;
+    padding: 0.8rem !important;
+  }
+  .thumbnail {
+    width: 33.3333% !important;
+    height: 15rem !important;
+  }
+  #caption {
+    font-size: 1.2rem;
+  }
 }
 @media (max-width: 650px) {
   .main-box {
     padding: 10rem 10rem;
+  }
+  .output .photo-single--modal {
+    height: 30rem !important;
+  }
+  .output .prev,
+.output .next {
+    top: 28rem !important;
+    padding: 0.8rem !important;
   }
   .output .country-card {
     width: 100% !important;
