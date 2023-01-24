@@ -237,6 +237,7 @@ html {
   right: 25px;
   font-size: 35px;
   font-weight: bold;
+  z-index: 1003;
 }
 .main-box .output .modal .close:hover,
 .main-box .output .modal .close:focus {
@@ -248,7 +249,6 @@ html {
   position: relative;
   background-color: #000;
   margin: auto;
-  width: 90%;
   padding-top: 10rem;
   max-width: 1200px;
   /* Hide the slides by default */
