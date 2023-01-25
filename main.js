@@ -239,6 +239,7 @@ form.addEventListener("submit", function (e) {
 	const userInput = input.value;
 	if (input.value != "") {
 		document.querySelector(".output").innerHTML = `
+			<div class="error"></div>
 			<div class="map-wrapper">
 				<div class="map map-default" id="map"></div>
 				<div class="toggle-map"><i class="fa-solid fa-toggle-off toggle-map-icon"></i></div>
@@ -263,10 +264,15 @@ form.addEventListener("submit", function (e) {
 
 const getJSON = (url, errorMsg = "Something went wrong. Probably network connection problem.") => {
 	return fetch(url).then((res) => {
-		console.log(res.ok);
 		if (!res.ok) throw new Error(`${errorMsg} ${res.status}`);
 		return res.json();
 	});
+};
+
+const renderErr = (msg) => {
+	const output = document.querySelector(".error");
+	output.insertAdjacentText("beforeend", msg);
+	output.style.display = "block"
 };
 
 function getCountryBasics(name) {
@@ -275,12 +281,10 @@ function getCountryBasics(name) {
 	getJSON(`https://restcountries.com/v3.1/name/${name}?fullText=true`, "Country not found.")
 		.then(([data]) => {
 			renderCard(data);
-			console.log(data);
 			return data;
 		})
 		.then((data) => {
 			loadMap(data.latlng);
-			document.querySelector(".map").style.opacity = 1;
 			return data;
 		})
 		.then((data) => {
@@ -288,16 +292,15 @@ function getCountryBasics(name) {
 			return data;
 		})
 		.then((data) => {
-			console.log(data.name.common);
 			unsplash(data.name.common);
 		})
 		.catch((error) => {
 			console.error(`${error} 💥`);
 			console.error(`${error.message} 💥`);
+			renderErr(error.message)
 		})
 		.finally(() => {
 			output.style.opacity = 1;
-			map = document.querySelector(".map");
 			mapToggle = document.querySelector(".toggle-map-icon");
 			mapToggle.addEventListener("click", () => {
 				toggleMapControl();
@@ -318,12 +321,16 @@ function getWeather(latlng) {
 }
 
 function loadMap(coords) {
+	console.log(coords);
 	const map = L.map("map").setView(coords, 6);
 	L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 	}).addTo(map);
 	L.marker(coords).addTo(map).bindPopup("Weather data based on this location.").openPopup();
-	// leaflet.js map does inform of internal errors already
+	
+	// Show map and enable toggle
+	document.querySelector(".map-wrapper").style.opacity = 1;
+	
 }
 
 function unsplash(query) {
@@ -486,6 +493,7 @@ function chooseWeatherIcon(weathercode) {
 ///////////////////////////////////////////////////////////
 ////////////// Toggle map back and forth //////////////////
 function toggleMapControl() {
+	const map = document.getElementById('map')
 	map.style.pointerEvents = "all";
 	map.style.userSelect = "all";
 
