@@ -27,6 +27,26 @@ html {
     margin: 0 auto;
     margin-bottom: 2rem;
 
+    input[type=submit] {
+      // width: 2rem;
+      padding: 12px 10px;
+      margin: 0 0 2rem 0;
+      display: inline-block;
+      border: solid rgb(82, 122, 209) 1px;
+      background: rgb(82, 122, 209);
+      border-radius: 4px;
+      box-sizing: border-box;
+      text-align: center;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+
+      &:hover {
+        border: solid rgb(61, 108, 211) 1px;
+        background: rgb(61, 108, 211);
+      }
+    }
+
     .autocomplete {
       /*the container must be positioned relative:*/
       position: relative;
